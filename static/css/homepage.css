@@ -1,0 +1,144 @@
+body, h1, h2, h3, p, ul {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.profile-info {
+  margin-left: 10px;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.profile-info span {
+  font-size: 14px;
+  color: green;
+}
+
+.follow-btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #0073b1;
+  color: #fff;
+  cursor: pointer;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav ul li a{
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.cta {
+  display: flex;
+}
+
+.cta button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.login-btn {
+  background-color: #0073b1;
+  color: #fff;
+}
+
+.signup-btn {
+  background-color: #00aaff;
+  color: #fff;
+}
+
+.hero {
+  background-color: #fff;
+  text-align: center;
+  padding: 50px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.cta-btn {
+  padding: 15px 30px;
+  background-color: #00aaff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.stats .customers, .stats .rating {
+  margin: 0 20px;
+  text-align: center;
+}
+
+.stats  .customers span, .stats .rating span {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.stats p {
+  font-size: 14px;
+}
