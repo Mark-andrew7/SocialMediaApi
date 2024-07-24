@@ -1,5 +1,6 @@
 h5 {
   color: red;
+  font-size: 14px;
 }
 
 body {
@@ -15,4 +16,56 @@ body {
 
 .signup-container {
   background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+
+.signup-container input[type="text"],
+.signup-container input[type="password"],
+.signup-container input[type="email"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.signup-container input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.5s;
+}
+
+.signup-container input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.login-prompt {
+  background-color: #f0f0f0;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.login-prompt p {
+  margin: 0;
+}
+
+.login-prompt a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.login-prompt a:hover {
+  color: #0056b3;
 }
