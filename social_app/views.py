@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from verify_email.email_handler import send_verification_email
 
 def index(request):
   return render(request, 'index.html')
@@ -21,10 +22,14 @@ def signup(request):
         return redirect('signup')
       else:
         user = User.objects.create_user(username=username, email=email, password=password)
+        user.is_active = False
         user.save()
+
+        send_verification_email(user, request)
+        messages.info(request, 'Please confirm your email address to complete the registration')
         return redirect('login')
     else:
-      messages.info(request, 'Password not matching')
+      messages.info(request, 'Passwords do not matching')
       return redirect('signup')
   else: 
     return render(request, 'signup.html')
@@ -37,7 +42,7 @@ def login(request):
 
     user = auth.authenticate(username=username, password=password)
 
-    if user is not None:
+    if user is not None and user.is_active:
       auth.login(request, user)
       return redirect('/')
     else:
@@ -47,4 +52,5 @@ def login(request):
     return render(request, 'login.html')
 
 def logout(request):
+  auth.logout(request)
   return redirect('index')

@@ -1,25 +1,28 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Sign Up</title>
-    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
 </head>
 <body>
 {% for message in messages %}
 <h5>{{message}}</h5>
 {% endfor %}
-    <form method="POST" action="{% url 'signup' %}">
-      {% csrf_token %}
-        <p>Username</p>
-        <input type="text" name="username" required>
-        <p>Email</p>
-        <input type="email" name="email" required>
-        <p>Password</p>
-        <input type="password" name="password" required>
-        <p>Repeat password</p>
-        <input type="password" id="password2" name="password2" required> <br>
-        <input type="submit" value="Sign Up">
-    </form>
-    <p>Already have an account? <a href="/login">Log in</a></p>
+    <div class="signup-container">
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <p>Username</p>
+            <input type="text" name="username" required>
+            <p>Email</p>
+            <input type="email" name="email" required>
+            <p>Password</p>
+            <input type="password" name="password" required>
+            <p>Repeat password</p>
+            <input type="password" id="password2" name="password2" required> <br>
+            <input type="submit" value="Sign Up">
+        </form>
+        <p>Already have an account? <a href="/login">Log in</a></p>
+    </div>
+</body>
 </html>
