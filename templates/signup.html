@@ -1,9 +1,11 @@
-{% load static %}
+{% load static compress %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Sign Up</title>
+    {% compress css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    {% endcompress %}
 </head>
 <body>
 {% for message in messages %}

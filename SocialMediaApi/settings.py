@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_app',
     'verify_email.apps.VerifyEmailConfig',
+    'compressor',
 ]
 
 MIDDLEWARE = [
@@ -130,6 +131,13 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Add STATICFILES_FINDERS
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
 
 # Media files (User uploaded files)
 MEDIA_URL = '/media/'
