@@ -142,3 +142,15 @@ nav ul li a{
 .stats p {
   font-size: 14px;
 }
+
+.hero-image {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hero-image img {
+  width: 200px;
+  height: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

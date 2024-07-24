@@ -8,19 +8,21 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
-  {% for message in messages %}
-  <h3>{{ message }}</h3>
-  {% endfor %}
   <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     <div class="login-container">
+      {% for message in messages %}
+      <h3>{{ message }}</h3>
+      {% endfor %}
       <p>Username:</p>  
       <input type="text" name="username" placeholder="Username">
       <p>Password:</p>
       <input type="password" name="password" placeholder="Password"><br>
       <button type="submit">Login</button>
   </form>
-      <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+      <div class="signup-container">
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+      </div>
     </div>
 </body>
 </html>
