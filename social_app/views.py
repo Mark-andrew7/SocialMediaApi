@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from verify_email.email_handler import send_verification_email
+from django.contrib.auth.decorators import login_required
+from .models import Profile
+from .forms import ProfileForm
 
 def index(request):
   return render(request, 'index.html')
@@ -52,3 +55,8 @@ def login(request):
 def logout(request):
   auth.logout(request)
   return redirect('index')
+
+@login_required
+def create_or_update_profile(request):
+  if request.method == 'POST':
+    form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
