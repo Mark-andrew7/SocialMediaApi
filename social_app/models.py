@@ -5,7 +5,8 @@ class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   bio = models.TextField(max_length=300, blank=True)
   profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True)
-  created_at = models.DateTimeField(auto_now_add=True)
+  birth_date = models.DateField(null=True, blank=True)
+  location = models.CharField(max_length=100, blank=True)
 
 class Post(models.Model):
   user = models.ForeignKey(Profile, on_delete=models.CASCADE)

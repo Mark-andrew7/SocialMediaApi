@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'social_app',
     'verify_email.apps.VerifyEmailConfig',
     'compressor',
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [

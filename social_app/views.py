@@ -25,8 +25,6 @@ def signup(request):
         user.is_active = False
         user.save()
 
-        send_verification_email(request, user)
-        messages.info(request, 'Please confirm your email address to complete the registration')
         return redirect('login')
     else:
       messages.info(request, 'Passwords do not match')
