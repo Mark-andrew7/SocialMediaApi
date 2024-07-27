@@ -60,3 +60,14 @@ def logout(request):
 def create_or_update_profile(request):
   if request.method == 'POST':
     form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+    if form.is_valid():
+      form.save()
+      return redirect('profile')
+  else:
+    form = ProfileForm(instance=request.user.profile)
+
+  return render(request, 'update_profile.html', {'form': form})
+
+def view_profile(request, username):
+  profile = get_object_or_404(Profile, user__username=username)
+  return render(request, 'view_profile.html', {'profile': profile})
