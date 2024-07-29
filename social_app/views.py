@@ -45,7 +45,7 @@ def login(request):
 
     if user is not None and user.is_active:
       auth.login(request, user)
-      return redirect('/')
+      return redirect('home')
     else:
       messages.info(request, 'Invalid credentials')
       return redirect('login')
@@ -71,3 +71,6 @@ def create_or_update_profile(request):
 def view_profile(request, username):
   profile = get_object_or_404(Profile, user__username=username)
   return render(request, 'view_profile.html', {'profile': profile})
+
+def profile_management(request):
+  return render(request, 'profile_management.html')
