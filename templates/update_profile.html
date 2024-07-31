@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+                <li><a href="{% url 'profile_management' %}">Profile Management</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </nav>
@@ -24,8 +25,5 @@
             <button type="submit">Save</button>
         </form>
     </main>
-    <footer>
-        <p>&copy; 2024 My Site</p>
-    </footer>
 </body>
 </html>

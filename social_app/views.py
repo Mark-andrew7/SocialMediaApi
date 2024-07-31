@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.urls import reverse
 from verify_email.email_handler import send_verification_email
 from django.contrib.auth.decorators import login_required
 from .models import Profile
@@ -25,7 +26,6 @@ def signup(request):
         return redirect('signup')
       else:
         user = User.objects.create_user(username=username, email=email, password=password)
-        user.is_active = False
         user.save()
 
         return redirect('login')
@@ -41,9 +41,9 @@ def login(request):
     username = request.POST['username']
     password = request.POST['password']
 
-    user = auth.authenticate(username=username, password=password)
+    user = auth.authenticate(request, username=username, password=password)
 
-    if user is not None and user.is_active:
+    if user is not None:
       auth.login(request, user)
       return redirect('home')
     else:
@@ -62,7 +62,7 @@ def create_or_update_profile(request):
     form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
     if form.is_valid():
       form.save()
-      return redirect('profile')
+      return redirect(reverse('profile', args=[request.user.username]))
   else:
     form = ProfileForm(instance=request.user.profile)
 
@@ -73,4 +73,10 @@ def view_profile(request, username):
   return render(request, 'view_profile.html', {'profile': profile})
 
 def profile_management(request):
+  if request.method == 'GET' and 'username' in request.GET:
+    username = request.GET.get('username')
+    return redirect('profile', username=username)
   return render(request, 'profile_management.html')
+
+def home(request):
+  return render(request, 'home.html')

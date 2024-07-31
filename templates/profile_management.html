@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +20,14 @@
 
     <main>
         <h1>Profile Management</h1>
-        <p><a href="{% url 'view_profile' %}">View Profile</a></p>
-        <p><a href="{% url 'update_profile' %}">Update Profile</a></p>
+        <p><a href="{% url 'profile' request.user.username %}">View Profile</a></p>
+        <p><a href="{% url 'edit_profile' %}">Update Profile</a></p>
+        <form method="GET" action="">
+            {% csrf_token %}
+            <label for="username">View Profile Of:</label>
+            <input type="text" id="username" name="username" placeholder="Enter Username">
+            <button type="submit">Search</button>
+        </form>
     </main>
 </body>
 </html>
