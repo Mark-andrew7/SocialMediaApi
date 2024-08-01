@@ -11,7 +11,7 @@ class Profile(models.Model):
 class Post(models.Model):
   user = models.ForeignKey(Profile, on_delete=models.CASCADE)
   content = models.TextField(max_length=300)
-  image = models.ImageField(upload_to='post_images/', blank=True)
+  media = models.ImageField(upload_to='post_images/', blank=True)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
 
@@ -27,8 +27,8 @@ class Comment(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
 
 class Follow(models.Model):
-  follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='follower')
-  following = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following')
+  follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following_set')
+  following = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='followers_set')
   created_at = models.DateTimeField(auto_now_add=True)
   
 class Unfollow(models.Model):

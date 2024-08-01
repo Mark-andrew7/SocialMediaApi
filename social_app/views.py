@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.urls import reverse
 from verify_email.email_handler import send_verification_email
 from django.contrib.auth.decorators import login_required
-from .models import Profile
-from .forms import ProfileForm
+from .models import Profile, Post, Like, Comment
+from .forms import ProfileForm, PostForm, CommentForm
 
 def index(request):
   return render(request, 'index.html')
@@ -80,3 +80,25 @@ def profile_management(request):
 
 def home(request):
   return render(request, 'home.html')
+
+@login_required
+def create_post(request):
+  if request.method == 'POST':
+    form = PostForm(request.POST, request.FILES)
+    if form.is_valid():
+      post = form.save(commit=False)
+      post.user = request.user
+      post.save()
+      return redirect('post_feed')
+  else:
+    form = PostForm()
+
+  return render(request, 'create_post.html', {'form': form})
+
+@login_required
+def post_feed(request):
+  # Get all the profiles that the user is following
+  following_profiles = request.user.profile.following_set.all()
+  # Get all the posts from the profiles the user is following
+  posts = Post.objects.filter(user__profile__in=[follow.following for follow in following_profiles])
+  return render(request, 'post_feed.html', {'posts': posts})
