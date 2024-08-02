@@ -102,3 +102,26 @@ def post_feed(request):
   # Get all the posts from the profiles the user is following
   posts = Post.objects.filter(user__profile__in=[follow.following for follow in following_profiles])
   return render(request, 'post_feed.html', {'posts': posts})
+
+@login_required
+def like_post(request, post_id):
+  post = get_object_or_404(Post, id=post_id)
+  like, created = Like.objects.get_or_create(user=request.user, post=post)
+  if not created:
+    like.delete()
+  return redirect('post_feed')
+
+@login_required
+def add_comment(request, post_id):
+  post = get_object_or_404(Post, id=post_id)
+  if request.method == 'POST':
+    form = CommentForm(request.POST)
+    if form.is_valid():
+      comment = form.save(commit=False)
+      comment.user = request.user
+      comment.post = post
+      comment.save()
+      return redirect('post_feed')
+  else:
+    form = CommentForm()
+  return render(request, 'add_comment.html', {'form': form})
