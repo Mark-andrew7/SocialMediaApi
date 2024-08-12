@@ -87,7 +87,8 @@ def create_post(request):
     form = PostForm(request.POST, request.FILES)
     if form.is_valid():
       post = form.save(commit=False)
-      post.user = request.user
+      profile = Profile.objects.get(user=request.user)
+      post.user = profile
       post.save()
       return redirect('post_feed')
   else:
@@ -100,7 +101,10 @@ def post_feed(request):
   # Get all the profiles that the user is following
   following_profiles = request.user.profile.following_set.all()
   # Get all the posts from the profiles the user is following
-  posts = Post.objects.filter(user__profile__in=[follow.following for follow in following_profiles])
+  posts = Post.objects.filter(user__in=[follow.following for follow in following_profiles]) | Post.objects.filter(user=request.user.profile)
+  # Order the posts by the date they were created
+  posts = posts.order_by('-created_at')
+
   return render(request, 'post_feed.html', {'posts': posts})
 
 @login_required
@@ -125,3 +129,25 @@ def add_comment(request, post_id):
   else:
     form = CommentForm()
   return render(request, 'add_comment.html', {'form': form})
+
+# Users view their own posts and can delete them
+@login_required
+def my_posts(request):
+  posts = Post.objects.filter(user=request.user.profile)
+  return render(request, 'my_posts.html', {'posts': posts})
+
+@login_required
+# Users can view the posts of other users
+def user_posts(request, username):
+  profile = get_object_or_404(Profile, user__username=username)
+  posts = Post.objects.filter(user=profile)
+  return render(request, 'user_posts.html', {'posts': posts})
+
+@login_required
+def delete_post(request, post_id):
+  post = get_object_or_404(Post, id=post_id)
+  if post.user != request.user.profile:
+    messages.info(request, 'You cannot delete this post')
+    return redirect('my_posts')
+  post.delete()
+  return redirect('my_posts')

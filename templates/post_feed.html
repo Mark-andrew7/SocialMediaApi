@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Feed</title>
+    <link rel="stylesheet" href="{% static 'css/post_feed.css' %}">
+</head>
+<body>
+    <h1>Your Feed</h1>
+    <div class="post-feed">
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post">
+                    <h2>{{ post.user.user.username }}</h2>
+                    <p>{{ post.content }}</p>
+                    {% if post.media %}
+                        <img src="{{ post.media.url }}" alt="Post media">
+                    {% endif %}
+                    <p>Posted on: {{ post.created_at }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No posts to show.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Posts</title>
+    <link rel="stylesheet" href="{% static 'css/user_posts.css' %}">
+</head>
+<body>
+    <h1>My Posts</h1>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <p>{{ post.content }}</p>
+                <p>Posted on: {{ post.created_at }}</p>
+                {% if post.media %}
+                    <img src="{{ post.media.url }}" alt="Post Media">
+                {% endif %}
+                <!-- Add a delete button for the user to delete their own posts -->
+                <form action="{% url 'delete_post' post.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% empty %}
+            <p>No posts to display.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
