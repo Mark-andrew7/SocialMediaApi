@@ -70,7 +70,8 @@ def create_or_update_profile(request):
 
 def view_profile(request, username):
   profile = get_object_or_404(Profile, user__username=username)
-  return render(request, 'view_profile.html', {'profile': profile})
+  posts = Post.objects.filter(user=profile)
+  return render(request, 'view_profile.html', {'profile': profile, 'posts': posts})
 
 def profile_management(request):
   if request.method == 'GET' and 'username' in request.GET:
