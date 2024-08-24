@@ -6,28 +6,68 @@
     <link rel="stylesheet" href="{% static 'css/view_profile.css' %}">
 </head>
 <body>
-    <!-- Profile Information -->
     <h1>{{ profile.user.username }}'s Profile</h1>
     <p>{{ profile.bio }}</p>
-
-    <!-- Display profile picture if available, otherwise show a placeholder -->
+    
     {% if profile.profile_picture %}
         <img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
-    {% else %}
-        <img src="{% static 'images/default_profile_picture.png' %}" alt="Default Profile Picture">
     {% endif %}
 
-    <!-- User's Posts -->
     <h2>Posts</h2>
-    <div>
+    <div id="posts-container">
         {% for post in posts %}
-            <div class="post">
+            <div class="post" data-post-id="{{ post.id }}">
                 <p>{{ post.content }}</p>
                 {% if post.media %}
                     <img src="{{ post.media.url }}" alt="Post Media">
                 {% endif %}
+                <p>Posted on: {{ post.created_at }}</p>
+                <p>Likes: <span class="like-count">{{ post.like_set.count }}</span></p>
+                
+                <!-- Like and Comment buttons -->
+                <span class="like-btn" onclick="likePost('{{ post.id }}')">Like</span>
+                <span class="comment-btn" onclick="toggleCommentSection('{{ post.id }}')">Comment</span>
+
+                <!-- Comments Section (initially hidden) -->
+                <div class="comments-section" id="comments-section-{{ post.id }}" style="display: none;">
+                    <form onsubmit="return addComment(event, '{{ post.id }}')"></form>
+                        {% csrf_token %}
+                        <input type="text" id="comment-input-{{ post.id }}" placeholder="Add a comment">
+                        <button type="submit">Submit</button>
+                    </form>
+                    <div class="comments-list">
+                        {% for comment in post.comment_set.all %}
+                            <p>{{ comment.user.username }}: {{ comment.content }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </div>
+
+    <!-- Pagination -->
+    {% if posts.has_other_pages %}
+        <div class="pagination">
+            {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}">Previous</a>
+            {% endif %}
+            <span>Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- Include jQuery and external JavaScript file -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Define the URLs as JavaScript variables -->
+    <script>
+        var likePostUrl = "{% url 'like_post' post_id=0 %}";
+        var addCommentUrl = "{% url 'add_comment' %}";
+        var csrfToken = "{{ csrf_token }}";
+    </script>
+
+    <script src="{% static 'js/view_profile.js' %}"></script>
 </body>
 </html>

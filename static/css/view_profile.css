@@ -1,66 +1,123 @@
 /* view_profile.css */
 
-/* General styles */
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
   color: #333;
+  margin: 0;
+  padding: 20px;
 }
 
-/* Container for the profile information */
+/* Profile Header */
 h1 {
-  text-align: center;
-  font-size: 2.5em;
+  font-size: 28px;
   color: #333;
-  margin-top: 20px;
 }
 
 p {
-  text-align: center;
-  font-size: 1.2em;
-  color: #777;
-  margin-top: 10px;
+  font-size: 16px;
+  color: #666;
 }
 
-/* Profile Picture Styles */
-img {
-  display: block;
-  margin: 20px auto;
-  max-width: 200px;
+/* Profile Picture */
+img[alt="Profile Picture"] {
   border-radius: 50%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 20px;
 }
 
-/* Posts Section */
-h2 {
-  text-align: center;
-  font-size: 2em;
-  color: #555;
+/* Posts Container */
+#posts-container {
   margin-top: 30px;
 }
 
-/* Container for posts */
+/* Individual Post Styling */
 .post {
   background-color: #fff;
+  border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  margin: 15px auto;
-  width: 80%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Post content styles */
 .post p {
-  font-size: 1.1em;
-  color: #333;
+  margin: 10px 0;
 }
 
-/* Post media styles */
+/* Post Media */
 .post img {
   max-width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-top: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Like and Comment Buttons */
+.like-btn, .comment-btn {
+  cursor: pointer;
+  color: #007bff;
+  font-size: 14px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.like-btn:hover, .comment-btn:hover {
+  text-decoration: underline;
+}
+
+/* Comments Section */
+.comments-section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.comments-section input[type="text"] {
+  width: calc(100% - 90px);
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.comments-section button {
+  padding: 8px 15px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comments-section button:hover {
+  background-color: #0056b3;
+}
+
+/* Individual Comments */
+.comments-list p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.pagination a:hover {
+  text-decoration: underline;
+}
+
+.pagination span {
+  font-size: 14px;
 }

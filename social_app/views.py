@@ -6,6 +6,7 @@ from verify_email.email_handler import send_verification_email
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Post, Like, Comment
 from .forms import ProfileForm, PostForm, CommentForm
+from django.http import JsonResponse
 
 def index(request):
   return render(request, 'index.html')
@@ -111,10 +112,11 @@ def post_feed(request):
 @login_required
 def like_post(request, post_id):
   post = get_object_or_404(Post, id=post_id)
-  like, created = Like.objects.get_or_create(user=request.user, post=post)
+  profile = get_object_or_404(Profile, user=request.user)
+  like, created = Like.objects.get_or_create(user=profile, post=post)
   if not created:
     like.delete()
-  return redirect('post_feed')
+  return JsonResponse({'likes': post.like_set.count()})
 
 @login_required
 def add_comment(request, post_id):
@@ -126,10 +128,10 @@ def add_comment(request, post_id):
       comment.user = request.user
       comment.post = post
       comment.save()
-      return redirect('post_feed')
+      return JsonResponse({'comment': comment.content, 'username': comment.user.username})
   else:
     form = CommentForm()
-  return render(request, 'add_comment.html', {'form': form})
+  return JsonResponse({'error': 'Invalid request'})
 
 # Users view their own posts and can delete them
 @login_required
