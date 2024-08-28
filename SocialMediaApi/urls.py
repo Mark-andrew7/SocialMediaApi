@@ -17,9 +17,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+from social_app.api.views import ProfileViewSet, PostViewSet, CommentViewSet, LikeViewSet, FollowViewSet, UnfollowViewSet
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+router = routers.DefaultRouter()
+router.register(r'profiles', ProfileViewSet)
+router.register(r'posts', PostViewSet)
+router.register(r'comments', CommentViewSet)
+router.register(r'likes', LikeViewSet)
+router.register(r'follows', FollowViewSet)
+router.register(r'unfollows', UnfollowViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('social_app.urls')),
     path('verification/', include('verify_email.urls')),
+    path('api/', include(router.urls)),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
